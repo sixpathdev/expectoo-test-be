@@ -8,8 +8,19 @@ const upload = multer({ dest: './public/data/uploads/' })
 const dbconnection = require('./config/connection')
 
 const app = express()
-app.use(cors())
 app.use(express.json())
+app.use((req, res, next) => {
+  res.setHeader('Access-Control-Allow-Origin', '*')
+  res.setHeader(
+    'Access-Control-Allow-Methods',
+    'GET, POST, DELETE, PUT, PATCH, OPTIONS'
+  )
+  res.setHeader(
+    'Access-Control-Allow-Headers',
+    'Content-Type, Authorization, x-paystack-signature'
+  )
+  next()
+})
 
 app.get('/', (req, res) => {
   return res.status(200).json({ data: 'Api works!' })
