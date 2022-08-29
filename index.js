@@ -2,11 +2,13 @@ const fs = require('fs')
 const express = require('express')
 const csv = require('csv-parser')
 const multer = require('multer')
+const cors = require('cors')
 const Book = require('./models/book.model')
 const upload = multer({ dest: './public/data/uploads/' })
 const dbconnection = require('./config/connection')
 
 const app = express()
+app.use(cors())
 app.use(express.json())
 
 app.get('/', (req, res) => {
@@ -33,7 +35,7 @@ app.get('/records', async (req, res) => {
   const records = await Book.findAll()
   return res
     .status(200)
-    .json({ staus: 'success', data: records, message: 'data saved' })
+    .json({ staus: 'success', data: records })
 })
 
 const connectDb = async () => {
