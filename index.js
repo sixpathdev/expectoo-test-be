@@ -8,11 +8,23 @@ const upload = multer({ dest: './public/data/uploads/' })
 const dbconnection = require('./config/connection')
 
 const app = express()
-app.use(
-  cors({
-    origin: ['http://localhost:3000', 'https://e-fe-test.vercel.app'],
-  })
-)
+app.use((req, res, next) => {
+  res.setHeader('Access-Control-Allow-Origin', '*')
+  res.setHeader(
+    'Access-Control-Allow-Methods',
+    'GET, POST, DELETE, PUT, PATCH, OPTIONS'
+  )
+  res.setHeader(
+    'Access-Control-Allow-Headers',
+    'Content-Type, Authorization, x-paystack-signature'
+  )
+  next()
+})
+// app.use(
+//   cors({
+//     origin: ['http://localhost:3000', 'https://e-fe-test.vercel.app'],
+//   })
+// )
 
 app.use(express.json())
 app.use(express.urlencoded())
@@ -39,9 +51,7 @@ app.post('/upload-csv', upload.single('csvfile'), (req, res) => {
 
 app.get('/records', async (req, res) => {
   const records = await Book.findAll()
-  return res
-    .status(200)
-    .json({ status: 'success', data: records })
+  return res.status(200).json({ status: 'success', data: records })
 })
 
 const connectDb = async () => {
