@@ -27,7 +27,7 @@ app.post('/upload-csv', upload.single('csvfile'), (req, res) => {
       const bookdata = Book.bulkCreate(results)
       return res
         .status(201)
-        .json({ staus: 'success', data: bookdata, message: 'data saved' })
+        .json({ status: 'success', data: bookdata, message: 'data saved' })
     })
 })
 
@@ -35,7 +35,7 @@ app.get('/records', async (req, res) => {
   const records = await Book.findAll()
   return res
     .status(200)
-    .json({ staus: 'success', data: records })
+    .json({ status: 'success', data: records })
 })
 
 const connectDb = async () => {
