@@ -8,7 +8,6 @@ const upload = multer({ dest: './public/data/uploads/' })
 const dbconnection = require('./config/connection')
 
 const app = express()
-app.use(express.json())
 app.use((req, res, next) => {
   res.setHeader('Access-Control-Allow-Origin', '*')
   res.setHeader(
@@ -21,6 +20,9 @@ app.use((req, res, next) => {
   )
   next()
 })
+
+app.use(express.json())
+app.use(express.urlencoded())
 
 app.get('/', (req, res) => {
   return res.status(200).json({ data: 'Api works!' })
