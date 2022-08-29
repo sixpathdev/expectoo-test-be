@@ -9,6 +9,10 @@ const dbconnection = require('./config/connection')
 const app = express()
 app.use(express.json())
 
+app.get('/', (req, res) => {
+  return res.status(200).json({ data: 'Api works!' })
+})
+
 app.post('/upload-csv', upload.single('csvfile'), (req, res) => {
   const results = []
   fs.createReadStream(req.file.path)
